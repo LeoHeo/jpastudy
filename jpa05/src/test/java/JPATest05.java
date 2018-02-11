@@ -138,4 +138,26 @@ public class JPATest05 extends HibernateTest {
     em.getTransaction().commit();
   }
 
+  @Test
+  public void test_bio_direction_not_remove_member() {
+    em.getTransaction().begin();
+
+    Team team = new Team("team1", "팀1");
+    em.persist(team);
+
+    Team team2 = new Team("team2", "팀2");
+    em.persist(team2);
+
+    Member member = new Member("member1", "test1");
+    member.setTeam(team);
+    member.setTeam(team2);
+    em.persist(member);
+
+    // 더이상 Team에 member1은 속하지 않는데 length가 1이 나옴
+    assertEquals(team.getMembers().size(), 1);
+    assertEquals(team2.getMembers().size(), 1);
+
+    em.getTransaction().commit();
+  }
+
 }
