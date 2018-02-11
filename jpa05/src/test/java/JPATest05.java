@@ -115,4 +115,29 @@ public class JPATest05 extends HibernateTest {
     em.getTransaction().commit();
   }
 
+  @Test
+  public void test_bi_direction() {
+    em.getTransaction().begin();
+
+    Team team = new Team("team1", "team1");
+    em.persist(team);
+
+    Member member = new Member("member1", "test1");
+    member.setTeam(team);
+    em.persist(member);
+
+    Member member2 = new Member("member2", "test2");
+    member2.setTeam(team);
+    em.persist(member2);
+
+    em.getTransaction().commit();
+
+    Team findTeam = em.find(Team.class, "team1");
+    List<Member> members = findTeam.getMembers();
+
+    System.out.println(team.getMembers());
+
+    assertEquals(members.size(), 0);
+  }
+
 }
