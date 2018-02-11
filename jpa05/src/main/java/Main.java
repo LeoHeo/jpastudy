@@ -20,7 +20,7 @@ public class Main {
 
     try {
       tx.begin();
-      logic(em);
+      // logic(em);
       tx.commit();
     } catch (Exception e) {
       e.printStackTrace();
@@ -31,16 +31,15 @@ public class Main {
     emf.close();
   }
 
-  public static void logic(EntityManager em) {
-
-    String id = "id1";
-    Member member = new Member();
-    member.setId(id);
-    member.setUsername("진한");
-    member.setAge(30);
-
-    em.persist(member);
-
-    // member.setAge(20);
-  }
+//  public static void logic(EntityManager em) {
+//
+//    String id = "id1";
+//    Member member = new Member();
+//    member.setId(id);
+//    member.setUsername("진한");
+//
+//    em.persist(member);
+//
+//    // member.setAge(20);
+//  }
 }

@@ -10,7 +10,7 @@ import org.junit.Test;
  * @author Heo, Jin Han
  * @since 2018-02-10
  */
-public class MainTest extends HibernateTest {
+public class JPATest02 extends HibernateTest {
 
   @Test
   public void test_persist_success() {
@@ -21,7 +21,6 @@ public class MainTest extends HibernateTest {
     Member member = new Member();
     member.setId(id);
     member.setUsername("진한");
-    member.setAge(30);
 
     em.persist(member);
 

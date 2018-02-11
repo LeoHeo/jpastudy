@@ -4,6 +4,7 @@
   <persistence-unit name="jpabook">
 
     <class>model.Member</class>
+    <class>model.Team</class>
     <properties>
 
       <!-- 필수 속성 -->
