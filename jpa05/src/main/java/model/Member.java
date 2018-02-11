@@ -29,6 +29,11 @@ public class Member {
 
   private String username;
 
+  public void setTeam(Team team) {
+    this.team = team;
+    team.getMembers().add(this);
+  }
+
   @ManyToOne
   @JoinColumn(name = "TEAM_ID")
   private Team team;

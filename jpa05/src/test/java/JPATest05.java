@@ -130,14 +130,12 @@ public class JPATest05 extends HibernateTest {
     member2.setTeam(team);
     em.persist(member2);
 
-    em.getTransaction().commit();
-
     Team findTeam = em.find(Team.class, "team1");
     List<Member> members = findTeam.getMembers();
 
-    System.out.println(team.getMembers());
+    assertEquals(members.size(), 2);
 
-    assertEquals(members.size(), 0);
+    em.getTransaction().commit();
   }
 
 }
