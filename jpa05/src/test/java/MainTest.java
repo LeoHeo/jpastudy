@@ -12,11 +12,14 @@ import org.junit.Test;
  */
 public class MainTest extends HibernateTest {
 
+
   @Test
   public void test_persist_success() {
     EntityTransaction tx = em.getTransaction();
 
     try {
+      tx.begin();
+
       String id = "id1";
       Member member = new Member();
       member.setId(id);
@@ -27,8 +30,30 @@ public class MainTest extends HibernateTest {
 
       Member findMember = em.find(Member.class, id);
 
+      tx.commit();
+
       assertNotNull(findMember);
       assertEquals(findMember.getUsername(), member.getUsername());
+    } catch (Exception e) {
+      e.printStackTrace();
+      tx.rollback();
+    }
+  }
+
+  @Test
+  public void test_findMember_success () {
+    EntityTransaction tx = em.getTransaction();
+
+    try {
+      tx.begin();
+
+      String id = "id1";
+
+      Member findMember = em.find(Member.class, id);
+
+      tx.commit();
+
+      assertNotNull(findMember);
     } catch (Exception e) {
       e.printStackTrace();
       tx.rollback();
