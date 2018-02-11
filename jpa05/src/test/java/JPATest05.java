@@ -1,3 +1,7 @@
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.List;
 import model.Member;
 import model.Team;
 import org.junit.Test;
@@ -10,7 +14,7 @@ public class JPATest05 extends HibernateTest {
 
   @Test
   public void test_member_save() {
-    em.getTransaction().begin();
+     em.getTransaction().begin();
 
     // 팀1 저장
     Team team1 = new Team("team1", "팀1");
@@ -36,7 +40,33 @@ public class JPATest05 extends HibernateTest {
     member2.setTeam(team1);
     em.persist(member2);
 
+    assertNotNull(member1.getTeam());
+    assertNotNull(member2.getTeam());
+
+     em.getTransaction().commit();
+  }
+
+  @Test
+  public void test_member_JPQL_query() {
+    em.getTransaction().begin();
+
+    Team team1 = new Team("team1", "팀1");
+    em.persist(team1);
+
+    Member member = new Member("member1", "테스트");
+    member.setTeam(team1);
+    em.persist(member);
+
     em.getTransaction().commit();
+
+    String jpql = "select m from Member m join m.team t where t.name=:teamName";
+
+    List<Member> resultList = em.createQuery(jpql, Member.class)
+        .setParameter("teamName", "팀1")
+        .getResultList();
+
+    assertEquals(resultList.size(), 1);
+
   }
 
 }

@@ -38,6 +38,16 @@ public class Member {
     this.username = username;
   }
 
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("Member{");
+    sb.append("id='").append(id).append('\'');
+    sb.append(", username='").append(username).append('\'');
+    sb.append(", team=").append(team);
+    sb.append('}');
+    return sb.toString();
+  }
+
   //  public String getId() {
 //    return id;
 //  }

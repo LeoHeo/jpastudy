@@ -2,7 +2,6 @@ package model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -28,5 +27,14 @@ public class Team {
   public Team(String id, String name) {
     this.id = id;
     this.name = name;
+  }
+
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("Team{");
+    sb.append("id='").append(id).append('\'');
+    sb.append(", name='").append(name).append('\'');
+    sb.append('}');
+    return sb.toString();
   }
 }
