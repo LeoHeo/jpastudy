@@ -1,5 +1,6 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.List;
 import model.Member;
@@ -90,7 +91,28 @@ public class JPATest05 extends HibernateTest {
     Member findMember2 = em.find(Member.class, "member1");
 
     assertEquals(findMember2.getTeam().getId(), "team2");
+  }
 
+  @Test
+  public void test_delete_relation() {
+    em.getTransaction().begin();
+
+    Team team = new Team("team1", "team1");
+    em.persist(team);
+
+    Member member = new Member("member1", "테스트");
+    member.setTeam(team);
+    em.persist(member);
+
+    // team1을 삭제하기 위해서는 기존의 member와의 연관관계를 삭제하고 team1을 삭제한다.
+    member.setTeam(null);
+    em.remove(team);
+
+    Team team1 = em.find(Team.class, "team1");
+
+    assertNull(team1);
+
+    em.getTransaction().commit();
   }
 
 }
