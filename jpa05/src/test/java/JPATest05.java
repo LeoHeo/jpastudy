@@ -154,7 +154,7 @@ public class JPATest05 extends HibernateTest {
     em.persist(member);
 
     // 더이상 Team에 member1은 속하지 않는데 length가 1이 나옴
-    assertEquals(team.getMembers().size(), 1);
+    assertEquals(team.getMembers().size(), 0);
     assertEquals(team2.getMembers().size(), 1);
 
     em.getTransaction().commit();
