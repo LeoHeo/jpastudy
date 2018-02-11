@@ -66,6 +66,30 @@ public class JPATest05 extends HibernateTest {
         .getResultList();
 
     assertEquals(resultList.size(), 1);
+  }
+
+  @Test
+  public void test_update_relation() {
+    em.getTransaction().begin();
+
+    Team team1 = new Team("team1", "팀1");
+    em.persist(team1);
+
+    Member member = new Member("member1", "테스트");
+    member.setTeam(team1);
+    em.persist(member);
+
+    Team team2 = new Team("team2", "팀2");
+    em.persist(team2);
+
+    Member findMember = em.find(Member.class, "member1");
+    findMember.setTeam(team2);
+
+    em.getTransaction().commit();
+
+    Member findMember2 = em.find(Member.class, "member1");
+
+    assertEquals(findMember2.getTeam().getId(), "team2");
 
   }
 
