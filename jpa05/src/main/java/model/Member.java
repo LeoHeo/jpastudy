@@ -10,6 +10,7 @@ import javax.persistence.Table;
  * @since 2018-02-10
  */
 @Entity
+// @org.hibernate.annotations.DynamicUpdate -> 필드가 많거나 저장되는 내용이 클때 수정된 필드만 동적으로 update sql 생성하는 전략
 @Table(name = "MEMBER")
 public class Member {
 
@@ -44,5 +45,15 @@ public class Member {
 
   public void setAge(Integer age) {
     this.age = age;
+  }
+
+  @Override
+  public String toString() {
+    final StringBuilder sb = new StringBuilder("Member{");
+    sb.append("id='").append(id).append('\'');
+    sb.append(", username='").append(username).append('\'');
+    sb.append(", age=").append(age);
+    sb.append('}');
+    return sb.toString();
   }
 }
