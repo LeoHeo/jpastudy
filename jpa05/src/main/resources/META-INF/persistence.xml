@@ -4,9 +4,15 @@
   <persistence-unit name="jpabook">
 
     <class>model.Member</class>
-    <class>model.Team</class>
-    <class>model.Product</class>
     <class>model.Member2</class>
+    <class>model.Member3</class>
+
+    <class>model.Team</class>
+
+    <class>model.Product</class>
+    <class>model.Product2</class>
+
+    <class>model.MemberProduct</class>
     <properties>
 
       <!-- 필수 속성 -->

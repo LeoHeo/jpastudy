@@ -1,10 +1,16 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
+import java.util.Date;
 import java.util.List;
 import model.Member;
 import model.Member2;
+import model.Member3;
+import model.MemberProduct;
+import model.MemberProductId;
 import model.Product;
+import model.Product2;
 import model.Team;
 import org.junit.Test;
 
@@ -96,6 +102,61 @@ public class JPATest06 extends HibernateTest {
 
     assertEquals(products.size(), 1);
     assertEquals(members.size(), 2);
+
+    em.getTransaction().commit();
+  }
+
+  @Test
+  public void test_save_custom_many_to_many_member_product() {
+    em.getTransaction().begin();
+
+    // 회원 저장
+    Member3 member1 = new Member3();
+    member1.setId("member1");
+    member1.setUsername("회원1");
+    em.persist(member1);
+
+    // 상품 저장
+    Product2 productA = new Product2();
+    productA.setId("productA");
+    productA.setName("상품1");
+    em.persist(productA);
+
+    // 회원 상품 저장
+    MemberProduct memberProduct = new MemberProduct();
+    memberProduct.setMember(member1);     // 주문 회원 - 연관관계 설정
+    memberProduct.setProduct(productA);   // 주문 상품 - 연관관계 설정
+    memberProduct.setOrderAmount(2);      // 주문 수량
+    memberProduct.setOrderDate(new Date()); // 주문 날짜
+    em.persist(memberProduct);
+
+    em.getTransaction().commit();
+  }
+
+  @Test
+  public void find_save_custom_many_to_many_member_product() {
+    test_save_custom_many_to_many_member_product();
+
+    em.getTransaction().begin();
+
+    MemberProductId memberProductId = new MemberProductId();
+    memberProductId.setMember("member1");
+    memberProductId.setProduct("productA");
+
+    MemberProduct memberProduct = em.find(MemberProduct.class, memberProductId);
+
+    assertNotNull(memberProduct);
+
+    Member3 member3 = memberProduct.getMember();
+    Product2 product2 = memberProduct.getProduct();
+
+    System.out.println(member3.getUsername());
+    System.out.println(product2.getName());
+    System.out.println(memberProduct.getOrderAmount());
+
+    assertNotNull(member3.getUsername());
+    assertNotNull(product2.getName());
+    assertNotNull(memberProduct.getOrderAmount());
 
     em.getTransaction().commit();
   }

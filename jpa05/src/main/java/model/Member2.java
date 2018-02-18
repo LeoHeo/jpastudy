@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -26,16 +27,18 @@ public class Member2 {
 
   private String username;
 
+//  @OneToMany(mappedBy = "member")
+//  private List<MemberProduct> memberProducts = new ArrayList<>();
+
   @ManyToMany
-//  @JoinTable(
-//      name = "MEMBER_PRODUCT",
-//      joinColumns = @JoinColumn(name = "MEMBER_ID"),
-//      inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID")
-//  )
+  @JoinTable(
+      name = "MEMBER_PRODUCT",
+      joinColumns = @JoinColumn(name = "MEMBER_ID"),
+      inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID")
+  )
   private List<Product> products = new ArrayList<>();
 
   public void addProduct(Product product) {
-    products.add(product);
-    product.getMembers().add(this);
+    this.products.add(product);
   }
 }
