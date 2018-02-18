@@ -51,7 +51,7 @@ public class JPATest06 extends HibernateTest {
     Member2 member1 = new Member2();
     member1.setId("member1");
     member1.setUsername("회원1");
-    member1.addProduct(productA);
+    member1.addProduct(productA); // 연관 관계 설정
     em.persist(member1);
 
     Member2 member2 = new Member2();
