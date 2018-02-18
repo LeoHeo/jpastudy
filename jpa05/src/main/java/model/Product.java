@@ -1,10 +1,13 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,4 +25,7 @@ public class Product {
   private String id;
 
   private String name;
+
+  @ManyToMany(mappedBy = "products")
+  private List<Member2> members = new ArrayList<>();
 }

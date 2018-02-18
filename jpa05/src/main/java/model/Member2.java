@@ -33,4 +33,9 @@ public class Member2 {
       inverseJoinColumns = @JoinColumn(name = "PRODUCT_ID")
   )
   private List<Product> products = new ArrayList<>();
+
+  public void addProduct(Product product) {
+    products.add(product);
+    product.getMembers().add(this);
+  }
 }

@@ -51,8 +51,14 @@ public class JPATest06 extends HibernateTest {
     Member2 member1 = new Member2();
     member1.setId("member1");
     member1.setUsername("회원1");
-    member1.getProducts().add(productA); // 연관관계 설정
+    member1.addProduct(productA);
     em.persist(member1);
+
+    Member2 member2 = new Member2();
+    member2.setId("member2");
+    member2.setUsername("회원2");
+    member2.addProduct(productA);
+    em.persist(member2);
 
     em.getTransaction().commit();
   }
@@ -74,5 +80,23 @@ public class JPATest06 extends HibernateTest {
 
     em.getTransaction().commit();
 
+  }
+
+  @Test
+  public void test_find_inverse_many_to_many() {
+    test_many_to_many_member();
+
+    em.getTransaction().begin();
+
+    Product product = em.find(Product.class, "productA");
+    List<Member2> members = product.getMembers();
+
+    Member2 member2 = em.find(Member2.class, "member1");
+    List<Product> products = member2.getProducts();
+
+    assertEquals(products.size(), 1);
+    assertEquals(members.size(), 2);
+
+    em.getTransaction().commit();
   }
 }
