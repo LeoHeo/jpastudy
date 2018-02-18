@@ -5,6 +5,8 @@
 
     <class>model.Member</class>
     <class>model.Team</class>
+    <class>model.Product</class>
+    <class>model.Member2</class>
     <properties>
 
       <!-- 필수 속성 -->
