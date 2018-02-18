@@ -9,6 +9,7 @@ import model.Member2;
 import model.Member3;
 import model.MemberProduct;
 import model.MemberProductId;
+import model.Order;
 import model.Product;
 import model.Product2;
 import model.Team;
@@ -160,4 +161,51 @@ public class JPATest06 extends HibernateTest {
 
     em.getTransaction().commit();
   }
+
+  @Test
+  public void test_save_custom_many_to_many_alternate_key_member_product() {
+    em.getTransaction().begin();
+
+    // 회원 저장
+    Member3 member3 = new Member3();
+    member3.setId("member1");
+    member3.setUsername("회원1");
+    em.persist(member3);
+
+    // 상품 저장
+    Product2 productA = new Product2();
+    productA.setId("productA");
+    productA.setName("상품1");
+    em.persist(productA);
+
+    Order order = new Order();
+    order.setMember(member3);
+    order.setProduct(productA);
+    order.setOrderAmount(333);
+    order.setOrderDate(new Date());
+    em.persist(order);
+
+    em.getTransaction().commit();
+  }
+
+  @Test
+  public void test_find_custom_many_to_many_alternate_key_member_product() {
+    test_save_custom_many_to_many_alternate_key_member_product();
+
+    em.getTransaction().begin();
+
+    Long orderId = 1L;
+    Order order = em.find(Order.class, orderId);
+
+    Member3 member3 = order.getMember();
+    Product2 product2 = order.getProduct();
+
+    assertNotNull(member3);
+    assertNotNull(product2);
+    assertNotNull(member3.getOrders());
+    assertNotNull(order.getOrderAmount());
+
+    em.getTransaction().commit();
+  }
+
 }

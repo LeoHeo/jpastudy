@@ -25,6 +25,9 @@ public class Member3 {
 
   private String username;
 
+//  @OneToMany(mappedBy = "member")
+//  private List<MemberProduct> memberProducts = new ArrayList<>();
+
   @OneToMany(mappedBy = "member")
-  private List<MemberProduct> memberProducts = new ArrayList<>();
+  private List<Order> orders = new ArrayList<>();
 }

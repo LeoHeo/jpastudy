@@ -13,6 +13,8 @@
     <class>model.Product2</class>
 
     <class>model.MemberProduct</class>
+
+    <class>model.Order</class>
     <properties>
 
       <!-- 필수 속성 -->
